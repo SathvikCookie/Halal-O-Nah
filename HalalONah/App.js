@@ -1,117 +1,67 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
+import React, { useState } from "react";
+import { View, Text, TextInput, Button } from "react-native";
 
-import React from 'react';
-import type {Node} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+// Import the list of halal foods
+import halalFoods from "./halalFoods.json";
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+function App() {
+  // State variable to store the user's input
+  const [input, setInput] = useState("");
 
-/* $FlowFixMe[missing-local-annot] The type annotation(s) required by Flow's
- * LTI update could not be added via codemod */
-const Section = ({children, title}): Node => {
-  const isDarkMode = useColorScheme() === 'dark';
+  // Function to check if a food product is halal or not
+  function isHalal(food) {
+    // Convert the food product to lower case for case-insensitive matching
+    food = food.toLowerCase();
+
+    // Check if the food product is in the halal foods list
+    if (halalFoods.includes(food)) {
+      return true;
+    }
+
+    // If the food product is not in the list, it is not clear whether it is halal or not
+    return "not clear";
+  }
+
+  // Function to handle the "Check" button press
+  function handleCheckPress() {
+    // Call the isHalal function to check if the input is halal or not
+    const result = isHalal(input);
+
+    // Display the result on the screen
+    if (result === true) {
+      return (
+        <View>
+          <Text>The food product is halal.</Text>
+        </View>
+      );
+    } else if (result === false) {
+      return (
+        <View>
+          <Text>The food product is not halal.</Text>
+        </View>
+      );
+    } else {
+      return (
+        <View>
+          <Text>It is not clear whether the food product is halal or not.</Text>
+        </View>
+      );
+    }
+  }
+
   return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
+    <View>
+      {/* Text input to take in the user's input */}
+      <TextInput
+        value={input}
+        onChangeText={(text) => setInput(text)}
+        placeholder="Enter a food product"
+      />
+
+      {/* Button to check if the input is halal or not */}
+      <Button onPress={handleCheckPress} title="Check" />
     </View>
   );
-};
-
-const App: () => Node = () => {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
-  return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.js</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
-};
-
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
+}
 
 export default App;
