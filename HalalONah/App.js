@@ -1,60 +1,56 @@
-import React, { useState } from "react";
-import { View, Text, TextInput, Button } from "react-native";
+import React, {useState} from 'react';
+import type {Node} from 'react';
+import {
+  SafeAreaView,
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  useColorScheme,
+  View,
+  TextInput,
+  Button,
+} from 'react-native';
 
-// Import the list of halal foods
-import halalFoods from "./halalFoods.json";
+import {
+  Colors,
+  DebugInstructions,
+  Header,
+  LearnMoreLinks,
+  ReloadInstructions,
+} from 'react-native/Libraries/NewAppScreen';
 
-function App() {
-  // State variable to store the user's input
-  const [input, setInput] = useState("");
+// Check if given food is halal
+const isHalal = food => {
+  food = food.toLowerCase();
 
-  // Function to check if a food product is halal or not
-  function isHalal(food) {
-    // Convert the food product to lower case for case-insensitive matching
-    food = food.toLowerCase();
-
-    // Check if the food product is in the halal foods list
-    if (halalFoods.includes(food)) {
-      return true;
-    }
-
-    // If the food product is not in the list, it is not clear whether it is halal or not
-    return "not clear";
+  if (halalFoods.includes(food)) {
+    return true;
   }
 
-  // Function to handle the "Check" button press
-  function handleCheckPress() {
-    // Call the isHalal function to check if the input is halal or not
-    const result = isHalal(input);
+  return 'not clear';
+};
 
-    // Display the result on the screen
-    if (result === true) {
-      return (
-        <View>
-          <Text>The food product is halal.</Text>
-        </View>
-      );
-    } else if (result === false) {
-      return (
-        <View>
-          <Text>The food product is not halal.</Text>
-        </View>
-      );
-    } else {
-      return (
-        <View>
-          <Text>It is not clear whether the food product is halal or not.</Text>
-        </View>
-      );
-    }
-  }
+// Check if food is halal with the isHalal function, render screen based on the information
+const handleCheckPress = input => {
+  console.log('Checked');
+};
+
+const App: () => Node = () => {
+  const isDarkMode = useColorScheme() === 'dark';
+
+  const backgroundStyle = {
+    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+  };
+
+  const [input, setInput] = useState('');
 
   return (
     <View>
       {/* Text input to take in the user's input */}
       <TextInput
         value={input}
-        onChangeText={(text) => setInput(text)}
+        onChangeText={text => setInput(text)}
         placeholder="Enter a food product"
       />
 
@@ -62,6 +58,25 @@ function App() {
       <Button onPress={handleCheckPress} title="Check" />
     </View>
   );
-}
+};
+
+const styles = StyleSheet.create({
+  sectionContainer: {
+    marginTop: 32,
+    paddingHorizontal: 24,
+  },
+  sectionTitle: {
+    fontSize: 24,
+    fontWeight: '600',
+  },
+  sectionDescription: {
+    marginTop: 8,
+    fontSize: 18,
+    fontWeight: '400',
+  },
+  highlight: {
+    fontWeight: '700',
+  },
+});
 
 export default App;
