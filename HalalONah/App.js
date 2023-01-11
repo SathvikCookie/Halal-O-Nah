@@ -20,43 +20,52 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-// Check if given food is halal
-const isHalal = food => {
-  food = food.toLowerCase();
-
-  if (halalFoods.includes(food)) {
-    return true;
-  }
-
-  return 'not clear';
-};
-
-// Check if food is halal with the isHalal function, render screen based on the information
-const handleCheckPress = input => {
-  console.log('Checked');
-};
+import { useCameraDevices } from 'react-native-vision-camera';
+import { Camera } from 'react-native-vision-camera';
+import { useScanBarcodes, BarcodeFormat } from 'vision-camera-code-scanner';
 
 const App: () => Node = () => {
-  const isDarkMode = useColorScheme() === 'dark';
+  const [hasPermission, setHasPermission] = React.useState(false);
+  const devices = useCameraDevices();
+  const device = devices.back;
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
+  const [frameProcessor, barcodes] = useScanBarcodes([BarcodeFormat.QR_CODE], {
+    checkInverted: true,
+  });
 
-  const [input, setInput] = useState('');
+  // Alternatively you can use the underlying function:
+  //
+  // const frameProcessor = useFrameProcessor((frame) => {
+  //   'worklet';
+  //   const detectedBarcodes = scanBarcodes(frame, [BarcodeFormat.QR_CODE], { checkInverted: true });
+  //   runOnJS(setBarcodes)(detectedBarcodes);
+  // }, []);
+
+  React.useEffect(() => {
+    (async () => {
+      const status = await Camera.requestCameraPermission();
+      setHasPermission(status === 'authorized');
+    })();
+  }, []);
 
   return (
-    <View>
-      {/* Text input to take in the user's input */}
-      <TextInput
-        value={input}
-        onChangeText={text => setInput(text)}
-        placeholder="Enter a food product"
-      />
-
-      {/* Button to check if the input is halal or not */}
-      <Button onPress={handleCheckPress} title="Check" />
-    </View>
+    device != null &&
+    hasPermission && (
+      <>
+        <Camera
+          style={StyleSheet.absoluteFill}
+          device={device}
+          isActive={true}
+          frameProcessor={frameProcessor}
+          frameProcessorFps={5}
+        />
+        {barcodes.map((barcode, idx) => (
+          <Text key={idx} style={styles.barcodeTextURL}>
+            {barcode.displayValue}
+          </Text>
+        ))}
+      </>
+    )
   );
 };
 
@@ -76,6 +85,11 @@ const styles = StyleSheet.create({
   },
   highlight: {
     fontWeight: '700',
+  },
+  barcodeTextURL: {
+    fontSize: 20,
+    color: 'white',
+    fontWeight: 'bold',
   },
 });
 
