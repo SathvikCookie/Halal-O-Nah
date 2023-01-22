@@ -14,8 +14,11 @@ export default function HomePage() {
     (async() => {
       const {status} = await BarCodeScanner.requestPermissionsAsync();
       setHasPermission(status === "granted");
+      setScanData(undefined);
     })();
   }, []);
+
+
 
   if (!hasPermission) {
     return (
@@ -32,8 +35,9 @@ export default function HomePage() {
 
   return (
       <View style={styles.container}>
+        <Text style={styles.scanText}>Please scan your item:</Text>
         <BarCodeScanner
-          style={StyleSheet.absoluteFillObject}
+          style={styles.scanner}
           onBarCodeScanned={scanData ? undefined : handleBarCodeScanned}
           />
           {scanData && <Button title='Scan Again?' onPress={() => setScanData(undefined)} />}
@@ -47,6 +51,15 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
-    justifyContent: "center",
   },
+  scanText: {
+    marginHorizontal: '10%',
+    marginTop: 70,
+    marginBottom: 30,
+    fontSize: 30
+  },
+  scanner: {
+    width: '85%',
+    height: '60%'
+  }
 });

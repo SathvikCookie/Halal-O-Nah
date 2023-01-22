@@ -13,8 +13,8 @@ export default function App() {
   return (
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen name="HomePage" component={HomePage} />
-          <Stack.Screen name="InfoScreen" component={InfoScreen} />
+          <Stack.Screen options={{headerShown: false}} name="HomePage" component={HomePage} />
+          <Stack.Screen options={{headerShown: false}} name="InfoScreen" component={InfoScreen} />
         </Stack.Navigator>
       </NavigationContainer>
   );
