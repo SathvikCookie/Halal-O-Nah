@@ -105,6 +105,7 @@ export default function InfoScreen() {
         <View style={isHalal ? styles.halalIconContainer : styles.notHalalIconContainer}>
           <Feather name={isHalal ? "check" : "x"} style={styles.icon} size={200}/>
         </View>
+        <Text style={styles.nameText}>{productName}</Text>
         <Text style={styles.halalText}>{isHalal ? "Your product is Halal!" : "Your product is not Halal!"}</Text>
         <Pressable 
           style={styles.backButton} 
@@ -189,6 +190,10 @@ const styles = StyleSheet.create({
   },
   textInput: {
     marginTop: 20,
-
-  }
+  },
+  nameText: {
+    marginTop: 30,
+    fontSize: 30,
+    color: '#333'
+  },
 });
