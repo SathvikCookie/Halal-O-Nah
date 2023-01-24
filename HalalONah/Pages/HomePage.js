@@ -1,3 +1,10 @@
+/*
+Sathvik Kanuri, Matthew Hrmich, Bilal Ali
+1/24/2023
+
+The HomePage for the app, where all teh scanning goes on. Moves toInfoScreen when a barcode is scanned
+*/
+
 import { StatusBar } from "expo-status-bar";
 import { Button, StyleSheet, Text, View } from "react-native";
 import React, { useEffect } from "react";
@@ -10,6 +17,7 @@ export default function HomePage() {
   const [hasPermission, setHasPermission] = React.useState(false);
   const [scanData, setScanData] = React.useState();
 
+  // Runs everytime this screen is loaded, resets scan data , makes sure we have camera permissions
   useEffect(() => {
     (async() => {
       const {status} = await BarCodeScanner.requestPermissionsAsync();
@@ -20,6 +28,7 @@ export default function HomePage() {
 
 
 
+  // If we don't have permission to use the camera, display a screen to request user to enable them
   if (!hasPermission) {
     return (
       <View>
@@ -28,11 +37,13 @@ export default function HomePage() {
     )
   }
 
+  // When the barcode is scanned, get our scan data, and navigate to the info screen
   const handleBarCodeScanned = ({type, data}) => {
     setScanData(data);
     navigation.navigate('InfoScreen', {scanData: data});
   }
 
+  // What is displayed on the screen when scannning, uses barcode scanner from expo-barcode-scanner
   return (
       <View style={styles.container}>
         <Text style={styles.scanText}>Please scan your item:</Text>
@@ -46,6 +57,7 @@ export default function HomePage() {
   );
 }
 
+// Styling for the homepage
 const styles = StyleSheet.create({
   container: {
     flex: 1,
