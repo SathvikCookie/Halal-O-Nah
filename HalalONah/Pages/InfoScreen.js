@@ -164,8 +164,7 @@ const styles = StyleSheet.create({
     color: '#fff',
   },
   halalText: {
-    marginTop: 30,
-    fontSize: 30,
+    r
   },
   backButton: {
     backgroundColor: "#00A334",

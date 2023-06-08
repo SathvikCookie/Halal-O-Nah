@@ -10,6 +10,7 @@ import { Button, StyleSheet, Text, View } from "react-native";
 import React, { useEffect } from "react";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { useNavigation } from "@react-navigation/native";
+import { TouchableOpacity } from "react-native";
 
 export default function HomePage() {
   const navigation = useNavigation();
@@ -53,8 +54,8 @@ export default function HomePage() {
           />
           {scanData && <Button title='Scan Again?' onPress={() => setScanData(undefined)} />}
         <StatusBar style="auto" />
-        <TouchableOpacity onPress={() => navigation.navigate('AboutUs')}>
-          <Text>About Us</Text>
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('AboutUs')}>
+          <Text style={styles.buttonText}>About Us</Text>
         </TouchableOpacity>
       </View>
   );
@@ -79,5 +80,11 @@ const styles = StyleSheet.create({
   },
   backButton: {
     borderRadius: 20,
+    marginTop: 45,
+    backgroundColor: "#aaa"
+  },
+  buttonText: {
+    fontSize: 20,
+    padding: 12
   }
 });
