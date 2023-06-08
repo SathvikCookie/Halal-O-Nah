@@ -1,8 +1,8 @@
 /*
-Sathvik Kanuri, Matthew Hrmich, Bilal Ali
-1/24/2023
+Sathvik Kanuri, Matthew Hrmich, Bilal Ali, Avni Doshi
+6/7/2023
 
-The HomePage for the app, where all teh scanning goes on. Moves toInfoScreen when a barcode is scanned
+The HomePage for the app, where all teh scanning goes on. Moves to InfoScreen when a barcode is scanned
 */
 
 import { StatusBar } from "expo-status-bar";
@@ -53,6 +53,9 @@ export default function HomePage() {
           />
           {scanData && <Button title='Scan Again?' onPress={() => setScanData(undefined)} />}
         <StatusBar style="auto" />
+        <TouchableOpacity onPress={() => navigation.navigate('AboutUs')}>
+          <Text>About Us</Text>
+        </TouchableOpacity>
       </View>
   );
 }
@@ -73,5 +76,8 @@ const styles = StyleSheet.create({
   scanner: {
     width: '85%',
     height: '60%'
+  },
+  backButton: {
+    borderRadius: 20,
   }
 });

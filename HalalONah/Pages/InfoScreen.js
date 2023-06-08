@@ -1,6 +1,6 @@
 /*
-Sathvik Kanuri, Matthew Hrmich, Bilal Ali
-1/24/2023
+Sathvik Kanuri, Matthew Hrmich, Bilal Ali, Avni Doshi
+6/7/2023
 
 The InfoScreen for the app, where product information and whether the product is halal or not is displayed. 
 Also, allows user to add to database if the product is not found.

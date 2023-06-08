@@ -6,6 +6,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import HomePage from "./Pages/HomePage";
 import InfoScreen from "./Pages/InfoScreen";
+import AboutUs from "./Pages/AboutUs";
 
 const Stack = createNativeStackNavigator();
 
@@ -15,6 +16,7 @@ export default function App() {
         <Stack.Navigator>
           <Stack.Screen options={{headerShown: false}} name="HomePage" component={HomePage} />
           <Stack.Screen options={{headerShown: false}} name="InfoScreen" component={InfoScreen} />
+          <Stack.Screen options={{headerShown: false}} name="AboutUs" component={AboutUs} />
         </Stack.Navigator>
       </NavigationContainer>
   );
