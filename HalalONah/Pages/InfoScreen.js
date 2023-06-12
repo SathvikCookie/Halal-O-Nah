@@ -60,6 +60,9 @@ export default function InfoScreen() {
       } catch(error) {
         console.log(error)
       }
+
+      // Fetches and stores nutrition grade value (API call)
+      setNutritionGrade(fetch("https://world.openfoodfacts.net/api/v2/product/" + scanData + "?fields=product_name,nutriscore_data,nutriments,nutrition_grades").product.nutrition_grades);
     }
 
     // Function to set data in the firebase database in the scenario that the item is not found. 
@@ -126,6 +129,7 @@ export default function InfoScreen() {
         </View>
         <Text style={styles.nameText}>{productName}</Text>
         <Text style={styles.halalText}>{isHalal ? "Your product is Halal!" : "Your product is not Halal!"}</Text>
+        <Text style={styles.halalText}>The nutrition grade is: + {nutritionGrade}</Text>
         <Pressable 
           style={styles.backButton} 
           onPress={() => navigation.push('HomePage')}
