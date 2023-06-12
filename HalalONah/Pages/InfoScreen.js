@@ -60,8 +60,6 @@ export default function InfoScreen() {
       } catch(error) {
         console.log(error)
       }
-
-      console.log(fetch("https://world.openfoodfacts.net/api/v2/product/" + scanData + "?fields=product_name,nutriscore_data,nutriments,nutrition_grades").product.nutrition_grades)
     }
 
     // Function to set data in the firebase database in the scenario that the item is not found. 

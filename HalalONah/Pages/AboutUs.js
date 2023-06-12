@@ -1,3 +1,10 @@
+/*
+Sathvik Kanuri, Matthew Hrmich, Bilal Ali, Avni Doshi
+6/7/2023
+
+The About Us page for the app, where more information regarding what being halal is displayed, and info about why the app was made is mentioned
+*/
+
 import React from "react";
 import { View } from "react-native";
 import { Text } from "react-native";
@@ -9,6 +16,7 @@ import { useNavigation } from "@react-navigation/native";
 export default function AboutUs () {
     const navigation = useNavigation();
 
+    // What is rendered on the screen, paragraph regarding why the app was made, adn a back button
     return (
         <View style={styles.container}>
             <Text style={styles.infoText}>
@@ -24,6 +32,7 @@ export default function AboutUs () {
     );
 }
 
+// Styling for the about us page for things such as the containter, text, and back button
 const styles = StyleSheet.create({
     container: {
         flex: 1,
